@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@import "@fontsource/poppins";
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -118,5 +132,21 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s cubic-bezier(0.4,0,0.2,1) both;
   }
 }
