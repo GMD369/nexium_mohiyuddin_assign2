@@ -73,8 +73,8 @@ export async function translateToUrduAI(text: string): Promise<string> {
             return translation;
           }
         }
-      } catch (modelError) {
-        console.log(`Model ${model} failed, trying next...`);
+      } catch (error) {
+        console.log(`Model ${model} failed, trying next...`, error);
         continue;
       }
     }
