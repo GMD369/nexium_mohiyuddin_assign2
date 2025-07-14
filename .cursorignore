@@ -1,6 +1,0 @@
-# Kuch bhi ignore karna ho to yahan likhein
-# Example: node_modules/
-# Lekin .env files ko ignore (hide) nahi karna
-!*.env
-!*.env.local
-!*.env.* 
