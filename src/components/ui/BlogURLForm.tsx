@@ -18,7 +18,7 @@ export default function BlogURLForm() {
     try {
       toast.info("Generating summary...");
 
-      const res = await fetch("/api/summarise", {
+      const res = await fetch("/api/summaries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),

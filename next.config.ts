@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    HUGGING_FACE_TOKEN: process.env.HUGGING_FACE_TOKEN,
+  },
 };
 
 export default nextConfig;
