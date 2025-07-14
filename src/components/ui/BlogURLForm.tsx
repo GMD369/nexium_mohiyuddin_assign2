@@ -8,12 +8,14 @@ import { toast } from "sonner";
 export default function BlogURLForm() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [summary, setSummary] = useState("");
+  const [summaryUr, setSummaryUr] = useState("");
+  const [summaryEn, setSummaryEn] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setSummary("");
+    setSummaryUr("");
+    setSummaryEn("");
 
     try {
       toast.info("Generating summary...");
@@ -26,17 +28,20 @@ export default function BlogURLForm() {
 
       const data = await res.json();
 
-      if (data.summary_ur) {
+      if (data.summary_ur || data.summary_en) {
         toast.success("Summary generated!");
-        setSummary(data.summary_ur);
+        setSummaryUr(data.summary_ur || "کوئی خلاصہ نہیں ملا");
+        setSummaryEn(data.summary_en || "No summary found.");
       } else {
         toast.warning("No summary found.");
-        setSummary("کوئی خلاصہ نہیں ملا");
+        setSummaryUr("کوئی خلاصہ نہیں ملا");
+        setSummaryEn("No summary found.");
       }
     } catch (err) {
       console.error("Error:", err);
       toast.error("Failed to fetch summary.");
-      setSummary("خلاصہ حاصل کرنے میں مسئلہ آیا");
+      setSummaryUr("خلاصہ حاصل کرنے میں مسئلہ آیا");
+      setSummaryEn("Error fetching summary.");
     } finally {
       setLoading(false);
     }
@@ -99,12 +104,20 @@ export default function BlogURLForm() {
           )}
         </Button>
 
-        {summary && (
+        {summaryEn && (
+          <div className="mt-6 p-5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-left leading-loose tracking-wide text-base">
+            <h2 className="font-bold text-lg mb-2 border-b border-white/20 pb-1">
+              English Summary:
+            </h2>
+            <p>{summaryEn}</p>
+          </div>
+        )}
+        {summaryUr && (
           <div className="mt-6 p-5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-right font-urdu leading-loose tracking-wide text-lg">
             <h2 className="font-bold text-lg mb-2 border-b border-white/20 pb-1">
               اردو خلاصہ:
             </h2>
-            <p>{summary}</p>
+            <p>{summaryUr}</p>
           </div>
         )}
       </form>
