@@ -1,91 +1,56 @@
-# Nexium Mohiyuddin Assignment 2
+# Blog Summariser
 
-## Project Overview
-This project is a Next.js application that scrapes content from a blog URL, generates an English summary, and then translates that summary into Urdu. Urdu translation is performed using a local Python Flask server powered by a Hugging Face model.
+This web app allows you to paste a blog URL, automatically extracts readable content, generates an AI summary in English (using Hugging Face), and translates it into Urdu (using Google Gemini API). Summaries are saved in Supabase and the full blog content is stored in MongoDB.
 
----
+## Features
+- Paste any blog URL and get a concise summary in English and Urdu.
+- English summary powered by Hugging Face's summarization model.
+- Urdu translation powered by Google Gemini API.
+- Summaries are saved in Supabase for record-keeping.
+- Full blog text is stored in MongoDB.
 
-## 1. Local Development Setup
+## Tech Stack
+- **Frontend:** Next.js, React, Tailwind CSS
+- **Backend:** Next.js API routes
+- **AI Models:**
+  - Hugging Face (English summarization)
+  - Google Gemini (Urdu translation)
+- **Database:**
+  - Supabase (summaries)
+  - MongoDB (full blog content)
 
-### **A. Node/Next.js App**
-1. **Install dependencies:**
+## Setup Instructions
+1. **Clone the repository:**
    ```bash
-   pnpm install
-   # or
-   npm install
-   # or
-   yarn install
+   git clone <repo-url>
+   cd nexium_mohiyuddin_assign2
    ```
-2. **Create a `.env.local` file:**
-   - In the project root, create a `.env.local` file and add the required keys (Supabase, MongoDB, Hugging Face token, etc.)
-
-3. **Start the Next.js app:**
-   ```bash
-   pnpm dev
-   # or
-   npm run dev
-   # or
-   yarn dev
-   ```
-   - The app will run at: http://localhost:3000
-
-### **B. Local Python Flask Translation Server**
-1. **Install Python (3.8+ recommended)**
 2. **Install dependencies:**
    ```bash
-   pip install -r requirements.txt
+   pnpm install
    ```
-3. **Run the server:**
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory and add:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_KEY=your_supabase_key
+   MONGO_URI=your_mongodb_connection_string
+   HUGGING_FACE_TOKEN=your_huggingface_token
+   ```
+4. **Run the development server:**
    ```bash
-   python translate_server.py
+   pnpm dev
    ```
-   - The server will run at: http://localhost:5000
-   - The Next.js app will automatically call this server for Urdu translation.
+5. **Open the app:**
+   Go to [http://localhost:3000](http://localhost:3000)
 
----
+## Usage
+- Paste a blog URL in the input field and click "Generate Summary".
+- The app will display both English and Urdu summaries.
 
-## 2. Deploying on Vercel
+## Notes
+- No Python or Flask server is required. All translation is handled via Gemini API.
+- Make sure your API keys are valid and have sufficient quota.
 
-### **A. Next.js App (Frontend/Backend)**
-1. **Create a new project on Vercel.**
-2. **Connect your GitHub repository.**
-3. **Set environment variables (Supabase, MongoDB, Hugging Face token, etc.)**
-4. **Click Deploy.**
-5. **Your app will be live on Vercel.**
 
-### **B. Urdu Translation on Vercel**
-- **Python Flask server cannot run on Vercel.**
-- Urdu translation will only work in local development unless you host your Flask server on a public server (VPS/Cloud).
-- In production, either the fallback dictionary translation will be used, or you must deploy the Flask server to a public service (Heroku, Render, Railway, etc.) and update your Next.js backend to use that public endpoint.
-
----
-
-## 3. Quick Start Guide
-
-- **Locally:**
-  - Start the Next.js app with `pnpm dev` (or `npm run dev` / `yarn dev`)
-  - Start the translation server with `python translate_server.py`
-  - Open the app, enter a blog URL, and you will get both the English summary and Urdu translation
-- **On Vercel:**
-  - Only the Next.js app will be deployed. Urdu translation will only work if the Flask server is running on a public endpoint.
-
----
-
-## 4. Useful Commands
-
-- **Install Node dependencies:** `pnpm install` / `npm install` / `yarn install`
-- **Start Next.js:** `pnpm dev` / `npm run dev` / `yarn dev`
-- **Install Python dependencies:** `pip install -r requirements.txt`
-- **Start Flask server:** `python translate_server.py`
-
----
-
-## 5. Notes
-- The Flask translation server endpoint: `http://localhost:5000/translate`
-- The Next.js app will automatically call this endpoint for Urdu translation
-- If the Flask server is down, the fallback dictionary translation will be used
-- In production (Vercel), Urdu translation will only work if the Flask server is running on a public endpoint
-
----
-
-**For more details, see `README_TRANSLATE_SERVER.md` or contact the maintainer.**

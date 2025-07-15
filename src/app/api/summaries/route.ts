@@ -4,7 +4,8 @@ import * as cheerio from "cheerio";
 import mongoose, { Model, Document } from "mongoose";
 import { connectMongo } from "@/lib/mongoClient";
 import { supabase } from "@/lib/supabaseClient";
-import { generateAISummary, translateToUrduAI } from "@/lib/huggingFaceClient";
+import { generateAISummary } from "@/lib/huggingFaceClient";
+import { translateToUrduGemini } from "@/lib/geminiClient";
 
 // Type-safe Blog schema
 interface BlogDocument extends Document {
@@ -77,7 +78,7 @@ export async function POST(req: Request) {
 
     // 2. Generate AI Summary
     const summary_en = await generateAISummary(text);
-    const summary_ur = await translateToUrduAI(summary_en);
+    const summary_ur = await translateToUrduGemini(summary_en);
 
     // 3. Save to Supabase
     const { error: supabaseError } = await supabase.from("summaries").insert([
