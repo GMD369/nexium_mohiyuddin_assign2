@@ -17,7 +17,8 @@ export async function translateToUrduGemini(text: string): Promise<string> {
     response.candidates[0].content.parts &&
     response.candidates[0].content.parts.length > 0
   ) {
-    return response.candidates[0].content.parts[0].text;
+    const urdu = response.candidates[0].content.parts[0].text;
+    return typeof urdu === "string" ? urdu : "ترجمہ دستیاب نہیں ہے";
   }
   return "ترجمہ دستیاب نہیں ہے";
 } 
